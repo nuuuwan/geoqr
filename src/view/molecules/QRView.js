@@ -1,11 +1,12 @@
 import { Box } from "@mui/material";
 import React from "react";
 import QRCode from "react-qr-code";
-
+import {GeoView} from "../atoms";
 export default function QRView({ latLng }) {
   return (
     <Box>
-      <QRCode value={latLng.googleMapsURL} />
+      <QRCode value={latLng.geoQRURL} />
+      <GeoView latLng={latLng} />
     </Box>
   );
 }
