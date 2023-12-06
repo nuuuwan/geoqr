@@ -1,9 +1,11 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
+import React from "react";
+import QRCode from "react-qr-code";
 
 export default function QRView({ latLng }) {
   return (
     <Box>
-      <Typography variant="h6">{JSON.stringify(latLng)}</Typography>
+      <QRCode value={latLng.googleMapsURL} />
     </Box>
   );
 }
