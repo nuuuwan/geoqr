@@ -1,5 +1,16 @@
+function toSigned(x, signs) {
+  const sign = x > 0 ? signs[0] : signs[1];
+  return `${Math.abs(x).toFixed(LatLng.PRECISION)}${sign}`;
+}
+
+function fromSigned(s) {
+  const sign = s.slice(-1);
+  const x = parseFloat(s.slice(0, -1));
+  return (sign === 'N' || sign === 'E') ? x : -x; 
+}
+
 export default class LatLng {
-  static PRECISION = 4;
+  static PRECISION = 6;
   static ZOOM = 19;
   constructor(latLng) {
     this.latLng = latLng;
@@ -13,13 +24,6 @@ export default class LatLng {
     return this.latLng[1];
   }
 
-  toString() {
-    const [lat, lng] = this.latLng;
-    return `${lat.toFixed(LatLng.PRECISION)}°N, ${lng.toFixed(
-      LatLng.PRECISION
-    )}°E`;
-  }
-
   get uri() {
     const [lat, lng] = this.latLng;
     return `geo:${lat},${lng}`;
@@ -27,5 +31,15 @@ export default class LatLng {
 
   get googleMapsURL() {
     return `https://www.google.com/maps/place/${this.lat},${this.lng}/@${this.lat},${this.lng},${LatLng.ZOOM}z`;
+  }
+
+  static fromString(latLngStr) {
+    const [lat, lng] = latLngStr.split(",").map((s) => fromSigned(s));
+    return new LatLng([lat, lng]);
+  }
+
+  toString() {
+    const [lat, lng] = this.latLng;
+    return toSigned(lat, ['N','S']) + ',' + toSigned(lng, ['E','W']);
   }
 }
