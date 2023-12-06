@@ -1,18 +1,29 @@
 import { Component } from "react";
 import { CircularProgress, Box } from "@mui/material";
-import { Geo } from "../../nonview/base";
+import { Geo, URLContext, LatLng } from "../../nonview/base";
 import { GeoView } from "../atoms";
 import { QRView } from "../molecules";
 
 export default class HomePage extends Component {
   constructor(props) {
     super(props);
-    this.state = { latLng: Geo.DEFAULT_LATLNG };
+    const context = URLContext.getContext();
+    let latLng = Geo.DEFAULT_LATLNG;
+    if (context.latLng) {
+      latLng = LatLng.fromString(context.latLng);
+    }
+    this.state = { latLng };
+    this.setURLContext(this.state);
+  }
+
+  setURLContext(state) {
+    const { latLng } = state;
+    const context = { latLng };
+    URLContext.setContext(context);
   }
 
   async componentDidMount() {
-    const latLng = await Geo.getLatLng();
-    this.setState({ latLng });
+
   }
 
   render() {
