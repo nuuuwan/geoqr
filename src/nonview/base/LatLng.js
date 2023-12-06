@@ -24,6 +24,10 @@ export default class LatLng {
     return this.latLng[1];
   }
 
+  get lngLat() {
+    return [this.lng, this.lat];
+  }
+
   get uri() {
     const [lat, lng] = this.latLng;
     return `geo:${lat},${lng}`;
