@@ -1,3 +1,5 @@
+import URLContext from "./URLContext";
+
 function toSigned(x, signs) {
   const sign = x > 0 ? signs[0] : signs[1];
   return `${Math.abs(x).toFixed(LatLng.PRECISION)}${sign}`;
@@ -35,6 +37,11 @@ export default class LatLng {
 
   get googleMapsURL() {
     return `https://www.google.com/maps/place/${this.lat},${this.lng}/@${this.lat},${this.lng},${LatLng.ZOOM}z`;
+  }
+
+  get geoQRURL() {
+    const url = URLContext.contextToURL({ latLng: this.toString()});
+    return url;
   }
 
   static fromString(latLngStr) {
