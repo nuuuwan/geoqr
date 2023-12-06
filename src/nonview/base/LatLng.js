@@ -40,7 +40,7 @@ export default class LatLng {
   }
 
   get geoQRURL() {
-    const url = URLContext.contextToURL({ latLng: this.toString()});
+    const url = URLContext.contextToURL({ latLng: this.toString() });
     return url;
   }
 
