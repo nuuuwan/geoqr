@@ -1,8 +1,10 @@
 import { Component } from "react";
 import { CircularProgress, Box } from "@mui/material";
 import { Geo, URLContext, LatLng } from "../../nonview/base";
-import { GeoView } from "../atoms";
+import { GeoView, PositionTargetImage } from "../atoms";
 import { QRView } from "../molecules";
+import { GeoMap } from "../organisms";
+import HomePageStyle from "./HomePageStyle";
 
 export default class HomePage extends Component {
   constructor(props) {
@@ -22,19 +24,42 @@ export default class HomePage extends Component {
     URLContext.setContext(context);
   }
 
+  setStateAndURLContext(state) {
+    this.setState(state, function () {
+      this.setURLContext(state);
+    });
+  }
+
   async componentDidMount() {}
+
+  async onChangeCenterAndZoom(center, zoom) {
+    const latLng = new LatLng(center);
+    this.setStateAndURLContext({ latLng });
+  }
 
   render() {
     const { latLng } = this.state;
-    console.debug({ latLng });
+
     if (!latLng) {
       return <CircularProgress />;
     }
     return (
-      <Box>
-        <GeoView latLng={latLng} />
-        <QRView latLng={latLng} />
+<Box>
+
+      <Box sx={HomePageStyle.BODY_TOP}>
+      <QRView latLng={latLng} />
+      
+    </Box>
+    <Box sx={HomePageStyle.BODY_BOTTOM}>
+        <GeoMap
+          center={latLng.latLng}
+          zoom={18}
+          onChangeCenterAndZoom={this.onChangeCenterAndZoom.bind(this)}
+        />
+                <PositionTargetImage />
+        
       </Box>
+    </Box>
     );
   }
 }
