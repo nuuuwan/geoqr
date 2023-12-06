@@ -1,7 +1,7 @@
 import { Component } from "react";
 import { CircularProgress, Box } from "@mui/material";
 import { Geo, URLContext, LatLng } from "../../nonview/base";
-import { GeoView, PositionTargetImage } from "../atoms";
+import { PositionTargetImage } from "../atoms";
 import { QRView } from "../molecules";
 import { GeoMap } from "../organisms";
 import HomePageStyle from "./HomePageStyle";
