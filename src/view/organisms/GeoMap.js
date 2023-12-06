@@ -1,7 +1,6 @@
 import { Component } from "react";
 import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 
-
 import "./GeoMap.css";
 
 const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -25,7 +24,6 @@ export default class GeoMap extends Component {
       <MapContainer center={center} zoom={zoom} zoomControl={false}>
         <EventComponent onChangeCenterAndZoom={onChangeCenterAndZoom} />
         <TileLayer url={URL_FORMAT} />
-        
       </MapContainer>
     );
   }

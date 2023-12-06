@@ -44,22 +44,19 @@ export default class HomePage extends Component {
       return <CircularProgress />;
     }
     return (
-<Box>
-
-      <Box sx={HomePageStyle.BODY_TOP}>
-      <QRView latLng={latLng} />
-      
-    </Box>
-    <Box sx={HomePageStyle.BODY_BOTTOM}>
-        <GeoMap
-          center={latLng.latLng}
-          zoom={18}
-          onChangeCenterAndZoom={this.onChangeCenterAndZoom.bind(this)}
-        />
-                <PositionTargetImage />
-        
+      <Box>
+        <Box sx={HomePageStyle.BODY_TOP}>
+          <QRView latLng={latLng} />
+        </Box>
+        <Box sx={HomePageStyle.BODY_BOTTOM}>
+          <GeoMap
+            center={latLng.latLng}
+            zoom={18}
+            onChangeCenterAndZoom={this.onChangeCenterAndZoom.bind(this)}
+          />
+          <PositionTargetImage />
+        </Box>
       </Box>
-    </Box>
     );
   }
 }

@@ -1,10 +1,9 @@
 .img-position-target {
   z-index: 10000;
-  top:70vh;
-  left:40%;
+  top: 70vh;
+  left: 40%;
   position: fixed;
   margin: auto;
   width: 20%;
   opacity: 0.5;
-
 }
