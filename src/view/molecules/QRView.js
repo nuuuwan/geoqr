@@ -6,7 +6,9 @@ export default function QRView({ latLng }) {
   return (
     <Box>
       <QRCode value={latLng.geoQRURL} />
+      <Box>
       <GeoView latLng={latLng} />
+      </Box>
     </Box>
   );
 }
