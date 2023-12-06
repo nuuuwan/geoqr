@@ -6,7 +6,7 @@ function toSigned(x, signs) {
 function fromSigned(s) {
   const sign = s.slice(-1);
   const x = parseFloat(s.slice(0, -1));
-  return (sign === 'N' || sign === 'E') ? x : -x; 
+  return sign === "N" || sign === "E" ? x : -x;
 }
 
 export default class LatLng {
@@ -40,6 +40,6 @@ export default class LatLng {
 
   toString() {
     const [lat, lng] = this.latLng;
-    return toSigned(lat, ['N','S']) + ',' + toSigned(lng, ['E','W']);
+    return toSigned(lat, ["N", "S"]) + "," + toSigned(lng, ["E", "W"]);
   }
 }

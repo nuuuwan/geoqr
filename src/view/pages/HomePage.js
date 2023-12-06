@@ -22,9 +22,7 @@ export default class HomePage extends Component {
     URLContext.setContext(context);
   }
 
-  async componentDidMount() {
-
-  }
+  async componentDidMount() {}
 
   render() {
     const { latLng } = this.state;
