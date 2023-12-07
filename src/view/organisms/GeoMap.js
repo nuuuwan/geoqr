@@ -3,7 +3,7 @@ import {
   MapContainer,
   TileLayer,
   useMapEvents,
-  Marker,
+  Circle,
   Polyline,
 } from "react-leaflet";
 import { LatLng, Geo } from "../../nonview/base";
@@ -27,25 +27,30 @@ function EventComponent({ onChangeCenterAndZoom }) {
 export default class GeoMap extends Component {
   render() {
     const { latLngList, onChangeCenterAndZoom } = this.props;
-    const lastLatLng =
+    const latLngEnd = (
       latLngList.length > 0
         ? latLngList[latLngList.length - 1]
-        : Geo.DEFAULT_LATLNG;
-    const center = lastLatLng.latLng;
+        : Geo.DEFAULT_LATLNG
+    ).latLng;
+    const latLngStart = (
+      latLngList.length > 0 ? latLngList[0] : Geo.DEFAULT_LATLNG
+    ).latLng;
+
     return (
       <MapContainer
-        center={center}
+        center={latLngEnd}
         zoom={LatLng.DEFAULT_ZOOM}
         zoomControl={false}
       >
         <EventComponent onChangeCenterAndZoom={onChangeCenterAndZoom} />
         <TileLayer url={URL_FORMAT} />
-        <Marker position={center} />
 
         <Polyline
           positions={latLngList.map((x) => x.latLng)}
           color={COLOR.GREEN}
         />
+        <Circle center={latLngStart} color={COLOR.ORANGE} fillOpacity={1} />
+        <Circle center={latLngEnd} color={COLOR.GREEN} fillOpacity={1} />
       </MapContainer>
     );
   }

@@ -48,7 +48,7 @@ export default class HomePage extends Component {
     if (latLngList.length >= 1) {
       latLngList.pop();
     }
-    this.setStateAndURLContext({ latLngList });
+    this.setStateAndURLContext({ latLngList, isPlaying: false });
   }
 
   onClickPlay() {
@@ -57,6 +57,10 @@ export default class HomePage extends Component {
 
   onClickStop() {
     this.setState({ isPlaying: false });
+  }
+
+  onClickClear() {
+    this.setStateAndURLContext({ latLngList: [], isPlaying: false });
   }
 
   render() {
@@ -78,6 +82,7 @@ export default class HomePage extends Component {
         </Box>
         <Box sx={HomePageStyle.FOOTER}>
           <BottomNavigation
+            onClickClear={this.onClickClear.bind(this)}
             onClickRewind={this.onClickRewind.bind(this)}
             onClickPlay={this.onClickPlay.bind(this)}
             onClickStop={this.onClickStop.bind(this)}
