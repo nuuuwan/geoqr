@@ -13,7 +13,8 @@ function fromSigned(s) {
 
 export default class LatLng {
   static PRECISION = 6;
-  static ZOOM = 19;
+  static DEFAULT_ZOOM = 18;
+  static DELIM_LIST_STR = ";";
   constructor(latLng) {
     this.latLng = latLng;
   }
@@ -44,13 +45,44 @@ export default class LatLng {
     return url;
   }
 
+  toString() {
+    const [lat, lng] = this.latLng;
+    return toSigned(lat, ["N", "S"]) + "," + toSigned(lng, ["E", "W"]);
+  }
+
   static fromString(latLngStr) {
     const [lat, lng] = latLngStr.split(",").map((s) => fromSigned(s));
     return new LatLng([lat, lng]);
   }
 
-  toString() {
-    const [lat, lng] = this.latLng;
-    return toSigned(lat, ["N", "S"]) + "," + toSigned(lng, ["E", "W"]);
+  static listFromString(latLngListStr) {
+    const latLngStrList = latLngListStr.split(LatLng.DELIM_LIST_STR);
+    return latLngStrList.map((latLngStr) => LatLng.fromString(latLngStr));
+  }
+
+  static listToString(latLngList) {
+    return latLngList
+      .map((latLng) => latLng.toString())
+      .join(LatLng.DELIM_LIST_STR);
+  }
+
+  static getBounds(latLngList) {
+    const latList = latLngList.map((latLng) => latLng.lat);
+    const lngList = latLngList.map((latLng) => latLng.lng);
+    const latMin = Math.min(...latList);
+    const latMax = Math.max(...latList);
+    const lngMin = Math.min(...lngList);
+    const lngMax = Math.max(...lngList);
+    return [
+      [latMin, lngMin],
+      [latMax, lngMax],
+    ];
+  }
+
+  static getGeoQRURL(latLngList) {
+    const url = URLContext.contextToURL({
+      latLngList: LatLng.listToString(latLngList),
+    });
+    return url;
   }
 }

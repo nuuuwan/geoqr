@@ -1,8 +1,8 @@
 import { Component } from "react";
 import { CircularProgress, Box } from "@mui/material";
-import { Geo, URLContext, LatLng } from "../../nonview/base";
+import { URLContext, LatLng } from "../../nonview/base";
 import { PositionTargetImage } from "../atoms";
-import { QRView } from "../molecules";
+import { BottomNavigation, QRView } from "../molecules";
 import { GeoMap } from "../organisms";
 import HomePageStyle from "./HomePageStyle";
 
@@ -10,17 +10,17 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props);
     const context = URLContext.getContext();
-    let latLng = Geo.DEFAULT_LATLNG;
-    if (context.latLng) {
-      latLng = LatLng.fromString(context.latLng);
+    let latLngList = [];
+    if (context.latLngList) {
+      latLngList = LatLng.listFromString(context.latLngList);
     }
-    this.state = { latLng };
+    this.state = { latLngList, isPlaying: false };
     this.setURLContext(this.state);
   }
 
   setURLContext(state) {
-    const { latLng } = state;
-    const context = { latLng };
+    const { latLngList } = state;
+    const context = { latLngList: LatLng.listToString(latLngList) };
     URLContext.setContext(context);
   }
 
@@ -32,29 +32,58 @@ export default class HomePage extends Component {
 
   async componentDidMount() {}
 
-  async onChangeCenterAndZoom(center, zoom) {
+  async onChangeCenterAndZoom(center) {
+    const { isPlaying } = this.state;
+    if (!isPlaying) {
+      return;
+    }
+    let { latLngList } = this.state;
     const latLng = new LatLng(center);
-    this.setStateAndURLContext({ latLng });
+    latLngList.push(latLng);
+    this.setStateAndURLContext({ latLngList });
+  }
+
+  onClickRewind() {
+    let { latLngList } = this.state;
+    if (latLngList.length >= 1) {
+      latLngList.pop();
+    }
+    this.setStateAndURLContext({ latLngList });
+  }
+
+  onClickPlay() {
+    this.setState({ isPlaying: true });
+  }
+
+  onClickStop() {
+    this.setState({ isPlaying: false });
   }
 
   render() {
-    const { latLng } = this.state;
+    const { latLngList, isPlaying } = this.state;
 
-    if (!latLng) {
+    if (!latLngList) {
       return <CircularProgress />;
     }
     return (
       <Box>
-        <Box sx={HomePageStyle.BODY_TOP}>
-          <QRView latLng={latLng} />
-        </Box>
-        <Box sx={HomePageStyle.BODY_BOTTOM}>
+        <Box sx={HomePageStyle.BODY}>
+          <QRView latLngList={latLngList} />
           <GeoMap
-            center={latLng.latLng}
-            zoom={18}
+            key={"GeoMap-" + JSON.stringify(LatLng.listToString(latLngList))}
+            latLngList={latLngList}
             onChangeCenterAndZoom={this.onChangeCenterAndZoom.bind(this)}
-          />
+          />{" "}
           <PositionTargetImage />
+        </Box>
+        <Box sx={HomePageStyle.FOOTER}>
+          <BottomNavigation
+            onClickRewind={this.onClickRewind.bind(this)}
+            onClickPlay={this.onClickPlay.bind(this)}
+            onClickStop={this.onClickStop.bind(this)}
+            isPlaying={isPlaying}
+            latLngList={latLngList}
+          />
         </Box>
       </Box>
     );

@@ -1,6 +1,13 @@
 import { Component } from "react";
-import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
-
+import {
+  MapContainer,
+  TileLayer,
+  useMapEvents,
+  Marker,
+  Polyline,
+} from "react-leaflet";
+import { LatLng, Geo } from "../../nonview/base";
+import { COLOR } from "../Style";
 import "./GeoMap.css";
 
 const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
@@ -19,11 +26,26 @@ function EventComponent({ onChangeCenterAndZoom }) {
 
 export default class GeoMap extends Component {
   render() {
-    const { center, zoom, onChangeCenterAndZoom } = this.props;
+    const { latLngList, onChangeCenterAndZoom } = this.props;
+    const lastLatLng =
+      latLngList.length > 0
+        ? latLngList[latLngList.length - 1]
+        : Geo.DEFAULT_LATLNG;
+    const center = lastLatLng.latLng;
     return (
-      <MapContainer center={center} zoom={zoom} zoomControl={false}>
+      <MapContainer
+        center={center}
+        zoom={LatLng.DEFAULT_ZOOM}
+        zoomControl={false}
+      >
         <EventComponent onChangeCenterAndZoom={onChangeCenterAndZoom} />
         <TileLayer url={URL_FORMAT} />
+        <Marker position={center} />
+
+        <Polyline
+          positions={latLngList.map((x) => x.latLng)}
+          color={COLOR.GREEN}
+        />
       </MapContainer>
     );
   }
