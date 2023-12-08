@@ -45,11 +45,13 @@ export default class HomePage extends Component {
   }
 
   onClickRewind() {
-    let { latLngList } = this.state;
+    let { latLngList , currentLatLng} = this.state;
     if (latLngList.length >= 1) {
       latLngList.pop();
+      currentLatLng =  latLngList.item(-1);
     }
-    this.setStateAndURLContext({ latLngList, isPlaying: false });
+    
+    this.setStateAndURLContext({ latLngList, currentLatLng, isPlaying: false });
   }
 
   onClickPlay() {
@@ -65,13 +67,25 @@ export default class HomePage extends Component {
   }
 
   onClickClear() {
-    this.setStateAndURLContext({ latLngList: [], isPlaying: false });
+    this.setStateAndURLContext({
+      latLngList: new LatLngList([]),
+      isPlaying: false,
+    });
+  }
+
+  async onClickMyLocation() {
+    this.setState({ currentLatLng: undefined }, async function() {
+      const currentLatLng = await LatLng.getCurrentLatLng();
+      console.debug(currentLatLng.toString())
+      this.setState({ currentLatLng });
+    }.bind(this));
+
   }
 
   render() {
-    const { latLngList, isPlaying } = this.state;
+    const { latLngList, currentLatLng, isPlaying } = this.state;
 
-    if (!latLngList) {
+    if (!currentLatLng) {
       return <CircularProgress />;
     }
     return (
@@ -79,8 +93,9 @@ export default class HomePage extends Component {
         <Box sx={HomePageStyle.BODY}>
           <QRView latLngList={latLngList} />
           <GeoMap
-            key={"GeoMap-" + JSON.stringify(latLngList.toString())}
+            key={'GeoMap-' + latLngList.toString()}
             latLngList={latLngList}
+            currentLatLng={currentLatLng}
             onChangeCenter={this.onChangeCenter.bind(this)}
           />{" "}
           <PositionTargetImage />
@@ -91,6 +106,7 @@ export default class HomePage extends Component {
             onClickRewind={this.onClickRewind.bind(this)}
             onClickPlay={this.onClickPlay.bind(this)}
             onClickStop={this.onClickStop.bind(this)}
+            onClickMyLocation={this.onClickMyLocation.bind(this)}
             isPlaying={isPlaying}
             latLngList={latLngList}
           />

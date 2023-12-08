@@ -31,14 +31,14 @@ function EventComponent({ onChangeCenter }) {
 
 export default class GeoMap extends Component {
   render() {
-    const { latLngList, onChangeCenter } = this.props;
+    const { latLngList, onChangeCenter,currentLatLng } = this.props;
 
     const latLngStart = (
-      latLngList.length > 0 ? latLngList.item(0) : LatLng.DEFAULT_LATLNG
+      latLngList.length > 0 ? latLngList.item(0) : currentLatLng
     ).latLng;
 
     const latLngEnd = (
-      latLngList.length > 0 ? latLngList.item(-1) : LatLng.DEFAULT_LATLNG
+      latLngList.length > 0 ? latLngList.item(-1) : currentLatLng
     ).latLng;
 
     const RADIUS = 10;

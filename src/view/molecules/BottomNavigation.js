@@ -2,6 +2,7 @@ import * as React from "react";
 import Box from "@mui/material/Box";
 import BottomNavigationMUI from "@mui/material/BottomNavigation";
 import BottomNavigationAction from "@mui/material/BottomNavigationAction";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
 
 import FastRewindIcon from "@mui/icons-material/FastRewind";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
@@ -19,6 +20,7 @@ export default function BottomNavigation({
   onClickRewind,
   onClickPlay,
   onClickStop,
+  onClickMyLocation,
   isPlaying,
   latLngList,
 }) {
@@ -53,6 +55,11 @@ export default function BottomNavigation({
           onClick={onClickStop}
           disabled={isStopDisabled}
           sx={{ opacity: getOpacity(isStopDisabled), color: COLOR.RED }}
+        />
+        <BottomNavigationAction
+          icon={<MyLocationIcon />}
+          onClick={onClickMyLocation}
+          sx={{ color: COLOR.GREEN }}
         />
       </BottomNavigationMUI>
     </Box>

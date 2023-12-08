@@ -76,4 +76,15 @@ export default class LatLng {
 
     return getDistanceInM(this.lat, this.lng, other.lat, other.lng);
   }
+
+  static async getCurrentLatLng() {
+    const options = {};
+    const data = await new Promise((resolve, reject) =>
+      navigator.geolocation.getCurrentPosition(resolve, reject, options)
+    );
+    const coords = data.coords;
+
+    const [lat, lng] = [coords.latitude, coords.longitude];
+    return new LatLng([lat, lng]);
+  }
 }
