@@ -51,8 +51,18 @@ export default class GeoMap extends Component {
           color={COLOR.ORANGE}
           weight={RADIUS}
         />
-        <Circle radius={RADIUS} center={latLngStart} color={COLOR.GREEN} fillOpacity={1} />
-        <Circle radius={RADIUS}  center={latLngEnd} color={COLOR.RED} fillOpacity={1} />
+        <Circle
+          radius={RADIUS}
+          center={latLngStart}
+          color={COLOR.GREEN}
+          fillOpacity={1}
+        />
+        <Circle
+          radius={RADIUS}
+          center={latLngEnd}
+          color={COLOR.RED}
+          fillOpacity={1}
+        />
       </MapContainer>
     );
   }
