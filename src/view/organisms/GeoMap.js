@@ -31,7 +31,7 @@ function EventComponent({ onChangeCenter }) {
 
 export default class GeoMap extends Component {
   render() {
-    const { latLngList, onChangeCenter,currentLatLng } = this.props;
+    const { latLngList, onChangeCenter, currentLatLng } = this.props;
 
     const latLngStart = (
       latLngList.length > 0 ? latLngList.item(0) : currentLatLng

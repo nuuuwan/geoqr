@@ -45,12 +45,12 @@ export default class HomePage extends Component {
   }
 
   onClickRewind() {
-    let { latLngList , currentLatLng} = this.state;
+    let { latLngList, currentLatLng } = this.state;
     if (latLngList.length >= 1) {
       latLngList.pop();
-      currentLatLng =  latLngList.item(-1);
+      currentLatLng = latLngList.item(-1);
     }
-    
+
     this.setStateAndURLContext({ latLngList, currentLatLng, isPlaying: false });
   }
 
@@ -74,12 +74,14 @@ export default class HomePage extends Component {
   }
 
   async onClickMyLocation() {
-    this.setState({ currentLatLng: undefined }, async function() {
-      const currentLatLng = await LatLng.getCurrentLatLng();
-      console.debug(currentLatLng.toString())
-      this.setState({ currentLatLng });
-    }.bind(this));
-
+    this.setState(
+      { currentLatLng: undefined },
+      async function () {
+        const currentLatLng = await LatLng.getCurrentLatLng();
+        console.debug(currentLatLng.toString());
+        this.setState({ currentLatLng });
+      }.bind(this)
+    );
   }
 
   render() {
@@ -93,7 +95,7 @@ export default class HomePage extends Component {
         <Box sx={HomePageStyle.BODY}>
           <QRView latLngList={latLngList} />
           <GeoMap
-            key={'GeoMap-' + latLngList.toString()}
+            key={"GeoMap-" + latLngList.toString()}
             latLngList={latLngList}
             currentLatLng={currentLatLng}
             onChangeCenter={this.onChangeCenter.bind(this)}
