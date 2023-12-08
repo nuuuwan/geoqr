@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/geoqr/static/css/main.916eab42.css",
-    "main.js": "/geoqr/static/js/main.a7a19135.js",
+    "main.js": "/geoqr/static/js/main.1e64abb9.js",
     "static/js/787.52ecb301.chunk.js": "/geoqr/static/js/787.52ecb301.chunk.js",
     "index.html": "/geoqr/index.html",
     "main.916eab42.css.map": "/geoqr/static/css/main.916eab42.css.map",
-    "main.a7a19135.js.map": "/geoqr/static/js/main.a7a19135.js.map",
+    "main.1e64abb9.js.map": "/geoqr/static/js/main.1e64abb9.js.map",
     "787.52ecb301.chunk.js.map": "/geoqr/static/js/787.52ecb301.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.916eab42.css",
-    "static/js/main.a7a19135.js"
+    "static/js/main.1e64abb9.js"
   ]
 }
