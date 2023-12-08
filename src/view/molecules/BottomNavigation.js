@@ -39,7 +39,7 @@ export default function BottomNavigation({
         <BottomNavigationAction
           icon={<FastRewindIcon />}
           onClick={onClickRewind}
-          disable={isRewindDisabled}
+          disabled={isRewindDisabled}
           sx={{ opacity: getOpacity(isRewindDisabled), color: COLOR.ORANGE }}
         />
         <BottomNavigationAction
