@@ -12,21 +12,26 @@ import "./GeoMap.css";
 
 const URL_FORMAT = "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png";
 
-function EventComponent({ onChangeCenterAndZoom }) {
+function EventComponent({ onChangeCenter }) {
   useMapEvents({
     moveend: (e) => {
       const centerRaw = e.target.getCenter();
       const center = [centerRaw.lat, centerRaw.lng];
       const zoom = e.target.getZoom();
-      onChangeCenterAndZoom(center, zoom);
+      onChangeCenter(center, zoom);
     },
+    click: (e) => {
+      const centerRaw = e.latlng;
+      const center = [centerRaw.lat, centerRaw.lng];
+      onChangeCenter(center);
+    }
   });
   return null;
 }
 
 export default class GeoMap extends Component {
   render() {
-    const { latLngList, onChangeCenterAndZoom } = this.props;
+    const { latLngList, onChangeCenter } = this.props;
 
     const latLngStart = (
       latLngList.length > 0 ? latLngList.item(0) : LatLng.DEFAULT_LATLNG
@@ -43,7 +48,7 @@ export default class GeoMap extends Component {
         zoom={LatLng.DEFAULT_ZOOM}
         zoomControl={false}
       >
-        <EventComponent onChangeCenterAndZoom={onChangeCenterAndZoom} />
+        <EventComponent onChangeCenter={onChangeCenter} />
         <TileLayer url={URL_FORMAT} />
 
         <Polyline

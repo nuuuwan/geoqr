@@ -34,7 +34,7 @@ export default class HomePage extends Component {
 
   async componentDidMount() {}
 
-  async onChangeCenterAndZoom(center) {
+  async onChangeCenter(center) {
     const { isPlaying } = this.state;
     let { latLngList } = this.state;
     const currentLatLng = new LatLng(center);
@@ -81,7 +81,7 @@ export default class HomePage extends Component {
           <GeoMap
             key={"GeoMap-" + JSON.stringify(latLngList.toString())}
             latLngList={latLngList}
-            onChangeCenterAndZoom={this.onChangeCenterAndZoom.bind(this)}
+            onChangeCenter={this.onChangeCenter.bind(this)}
           />{" "}
           <PositionTargetImage />
         </Box>
