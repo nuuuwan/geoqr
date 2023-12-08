@@ -27,13 +27,13 @@ function EventComponent({ onChangeCenterAndZoom }) {
 export default class GeoMap extends Component {
   render() {
     const { latLngList, onChangeCenterAndZoom } = this.props;
-    const latLngEnd = (
-      latLngList.length > 0
-        ? latLngList[latLngList.length - 1]
-        : LatLng.DEFAULT_LATLNG
-    ).latLng;
+
     const latLngStart = (
-      latLngList.length > 0 ? latLngList[0] : LatLng.DEFAULT_LATLNG
+      latLngList.length > 0 ? latLngList.item(0) : LatLng.DEFAULT_LATLNG
+    ).latLng;
+
+    const latLngEnd = (
+      latLngList.length > 0 ? latLngList.item(-1) : LatLng.DEFAULT_LATLNG
     ).latLng;
 
     return (
@@ -46,7 +46,7 @@ export default class GeoMap extends Component {
         <TileLayer url={URL_FORMAT} />
 
         <Polyline
-          positions={latLngList.map((x) => x.latLng)}
+          positions={latLngList.latLngList.map((x) => x.latLng)}
           color={COLOR.GREEN}
         />
         <Circle center={latLngStart} color={COLOR.ORANGE} fillOpacity={1} />

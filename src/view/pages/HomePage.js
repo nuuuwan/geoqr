@@ -1,6 +1,6 @@
 import { Component } from "react";
 import { CircularProgress, Box } from "@mui/material";
-import { URLContext, LatLng } from "../../nonview/base";
+import { URLContext, LatLng, LatLngList } from "../../nonview/base";
 import { PositionTargetImage } from "../atoms";
 import { BottomNavigation, QRView } from "../molecules";
 import { GeoMap } from "../organisms";
@@ -10,9 +10,9 @@ export default class HomePage extends Component {
   constructor(props) {
     super(props);
     const context = URLContext.getContext();
-    let latLngList = [];
+    let latLngList = new LatLngList([]);
     if (context.latLngList) {
-      latLngList = LatLng.listFromString(context.latLngList);
+      latLngList = LatLngList.fromString(context.latLngList);
     }
     this.state = { latLngList, isPlaying: false };
     this.setURLContext(this.state);
@@ -20,7 +20,7 @@ export default class HomePage extends Component {
 
   setURLContext(state) {
     const { latLngList } = state;
-    const context = { latLngList: LatLng.listToString(latLngList) };
+    const context = { latLngList: latLngList.toString() };
     URLContext.setContext(context);
   }
 
@@ -74,7 +74,7 @@ export default class HomePage extends Component {
         <Box sx={HomePageStyle.BODY}>
           <QRView latLngList={latLngList} />
           <GeoMap
-            key={"GeoMap-" + JSON.stringify(LatLng.listToString(latLngList))}
+            key={"GeoMap-" + JSON.stringify(latLngList.toString())}
             latLngList={latLngList}
             onChangeCenterAndZoom={this.onChangeCenterAndZoom.bind(this)}
           />{" "}
