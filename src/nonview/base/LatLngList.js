@@ -77,31 +77,30 @@ export default class LatLngList {
   }
 
   get totalDistance() {
-        const n = this.latLngList.length;
-        let totalDistance = 0;
-        for (let i = 0; i < n - 1; i++) {
-            const latLng = this.item(i);
-            const latLngNext = this.item(i + 1);
-            const distance = latLng.getDistance(latLngNext);
-            totalDistance += distance;
-        }
-        return totalDistance;
+    const n = this.latLngList.length;
+    let totalDistance = 0;
+    for (let i = 0; i < n - 1; i++) {
+      const latLng = this.item(i);
+      const latLngNext = this.item(i + 1);
+      const distance = latLng.getDistance(latLngNext);
+      totalDistance += distance;
     }
+    return totalDistance;
+  }
 
-    get totalDistanceHumanized() {
-        const totalDistance = this.totalDistance;
-        if (totalDistance < 1000) {
-            return `${totalDistance.toFixed(0)} m`;
-        }
-        return `${(totalDistance / 1000).toFixed(2)} km`;
+  get totalDistanceHumanized() {
+    const totalDistance = this.totalDistance;
+    if (totalDistance < 1000) {
+      return `${totalDistance.toFixed(0)} m`;
     }
+    return `${(totalDistance / 1000).toFixed(2)} km`;
+  }
 
-    get stats() {
-        const UNICODE_MIDDLE_DOT = "\u00B7";
-        return [
-            `${this.totalDistanceHumanized}`,
-            `${this.length.toLocaleString()} points`,
-        ].join(' ' + UNICODE_MIDDLE_DOT + ' ')
-    }
-
+  get stats() {
+    const UNICODE_MIDDLE_DOT = "\u00B7";
+    return [
+      `${this.totalDistanceHumanized}`,
+      `${this.length.toLocaleString()} points`,
+    ].join(" " + UNICODE_MIDDLE_DOT + " ");
+  }
 }
