@@ -36,6 +36,7 @@ export default class GeoMap extends Component {
       latLngList.length > 0 ? latLngList.item(-1) : LatLng.DEFAULT_LATLNG
     ).latLng;
 
+    const RADIUS = 10;
     return (
       <MapContainer
         center={latLngEnd}
@@ -48,9 +49,10 @@ export default class GeoMap extends Component {
         <Polyline
           positions={latLngList.latLngList.map((x) => x.latLng)}
           color={COLOR.GREEN}
+          weight={RADIUS}
         />
-        <Circle center={latLngStart} color={COLOR.ORANGE} fillOpacity={1} />
-        <Circle center={latLngEnd} color={COLOR.GREEN} fillOpacity={1} />
+        <Circle radius={RADIUS} center={latLngStart} color={COLOR.ORANGE} fillOpacity={1} />
+        <Circle radius={RADIUS}  center={latLngEnd} color={COLOR.GREEN} fillOpacity={1} />
       </MapContainer>
     );
   }
