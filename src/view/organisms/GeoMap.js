@@ -48,11 +48,11 @@ export default class GeoMap extends Component {
 
         <Polyline
           positions={latLngList.latLngList.map((x) => x.latLng)}
-          color={COLOR.GREEN}
+          color={COLOR.ORANGE}
           weight={RADIUS}
         />
-        <Circle radius={RADIUS} center={latLngStart} color={COLOR.ORANGE} fillOpacity={1} />
-        <Circle radius={RADIUS}  center={latLngEnd} color={COLOR.GREEN} fillOpacity={1} />
+        <Circle radius={RADIUS} center={latLngStart} color={COLOR.GREEN} fillOpacity={1} />
+        <Circle radius={RADIUS}  center={latLngEnd} color={COLOR.RED} fillOpacity={1} />
       </MapContainer>
     );
   }
