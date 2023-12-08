@@ -14,6 +14,10 @@ export default class LatLngList {
     this.latLngList.push(latLng);
   }
 
+  pop() {
+    return this.latLngList.pop();
+  }
+
   item(index) {
     if (index < 0) {
       index = this.latLngList.length + index;
@@ -71,4 +75,17 @@ export default class LatLngList {
     });
     return url;
   }
+
+  get totalDistance() {
+        const n = this.latLngList.length;
+        let totalDistance = 0;
+        for (let i = 0; i < n - 1; i++) {
+            const latLng = this.item(i);
+            const latLngNext = this.item(i + 1);
+            const distance = latLng.getDistance(latLngNext);
+            totalDistance += distance;
+        }
+        return totalDistance;
+    }
+
 }
