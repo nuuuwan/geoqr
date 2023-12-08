@@ -6,7 +6,7 @@ import {
   Circle,
   Polyline,
 } from "react-leaflet";
-import { LatLng, Geo } from "../../nonview/base";
+import { LatLng } from "../../nonview/base";
 import { COLOR } from "../Style";
 import "./GeoMap.css";
 
@@ -30,10 +30,10 @@ export default class GeoMap extends Component {
     const latLngEnd = (
       latLngList.length > 0
         ? latLngList[latLngList.length - 1]
-        : Geo.DEFAULT_LATLNG
+        : LatLng.DEFAULT_LATLNG
     ).latLng;
     const latLngStart = (
-      latLngList.length > 0 ? latLngList[0] : Geo.DEFAULT_LATLNG
+      latLngList.length > 0 ? latLngList[0] : LatLng.DEFAULT_LATLNG
     ).latLng;
 
     return (

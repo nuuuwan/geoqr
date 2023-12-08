@@ -1,20 +1,12 @@
 import URLContext from "./URLContext";
 
-function toSigned(x, signs) {
-  const sign = x > 0 ? signs[0] : signs[1];
-  return `${Math.abs(x).toFixed(LatLng.PRECISION)}${sign}`;
-}
-
-function fromSigned(s) {
-  const sign = s.slice(-1);
-  const x = parseFloat(s.slice(0, -1));
-  return sign === "N" || sign === "E" ? x : -x;
-}
-
 export default class LatLng {
-  static PRECISION = 6;
+  static PRECISION = 5;
+  static QUANTUM = 10 ** LatLng.PRECISION;
   static DEFAULT_ZOOM = 18;
   static DELIM_LIST_STR = ";";
+  static DEFAULT_LATLNG = new LatLng([6.917283873517496, 79.8647991483806]);
+
   constructor(latLng) {
     this.latLng = latLng;
   }
@@ -47,23 +39,51 @@ export default class LatLng {
 
   toString() {
     const [lat, lng] = this.latLng;
-    return toSigned(lat, ["N", "S"]) + "," + toSigned(lng, ["E", "W"]);
+    return `${lat.toFixed(LatLng.PRECISION)},${lng.toFixed(LatLng.PRECISION)}`;
   }
 
   static fromString(latLngStr) {
-    const [lat, lng] = latLngStr.split(",").map((s) => fromSigned(s));
+    const [lat, lng] = latLngStr.split(",").map((s) => parseFloat(s));
     return new LatLng([lat, lng]);
   }
 
+  static quant(f) {
+    return parseInt(f * LatLng.QUANTUM).toString();
+  }
+
+  static dequant(s) {
+    return parseFloat((parseInt(s) * 1.0) / LatLng.QUANTUM);
+  }
+
   static listFromString(latLngListStr) {
-    const latLngStrList = latLngListStr.split(LatLng.DELIM_LIST_STR);
-    return latLngStrList.map((latLngStr) => LatLng.fromString(latLngStr));
+    if (latLngListStr === "") {
+      return [];
+    }
+    const sList = latLngListStr.split(LatLng.DELIM_LIST_STR);
+    let [latPrev, lngPrev] = LatLng.DEFAULT_LATLNG.latLng;
+    let latLngList = [];
+    for (let s of sList) {
+      const [dLat, dLng] = s.split(",").map((s) => LatLng.dequant(s));
+      const [lat, lng] = [latPrev + dLat, lngPrev + dLng];
+      latLngList.push(new LatLng([lat, lng]));
+      [latPrev, lngPrev] = [lat, lng];
+    }
+    return latLngList;
   }
 
   static listToString(latLngList) {
-    return latLngList
-      .map((latLng) => latLng.toString())
-      .join(LatLng.DELIM_LIST_STR);
+    if (latLngList.length === 0) {
+      return "";
+    }
+    let sList = [];
+    let [latPrev, lngPrev] = LatLng.DEFAULT_LATLNG.latLng;
+    for (let latLng of latLngList) {
+      const [lat, lng] = latLng.latLng;
+      const [dLat, dLng] = [lat - latPrev, lng - lngPrev];
+      sList.push([dLat, dLng].map((f) => LatLng.quant(f)).join(","));
+      [latPrev, lngPrev] = [lat, lng];
+    }
+    return sList.join(LatLng.DELIM_LIST_STR);
   }
 
   static getBounds(latLngList) {
