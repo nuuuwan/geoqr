@@ -14,7 +14,8 @@ export default class HomePage extends Component {
     if (context.latLngList) {
       latLngList = LatLngList.fromString(context.latLngList);
     }
-    this.state = { latLngList, isPlaying: false };
+    const currentLatLng = (latLngList.length > 0 && latLngList.item(-1)) ||  LatLng.DEFAULT_LATLNG
+    this.state = { latLngList, isPlaying: false, currentLatLng };
     this.setURLContext(this.state);
   }
 
@@ -34,13 +35,12 @@ export default class HomePage extends Component {
 
   async onChangeCenterAndZoom(center) {
     const { isPlaying } = this.state;
-    if (!isPlaying) {
-      return;
-    }
     let { latLngList } = this.state;
-    const latLng = new LatLng(center);
-    latLngList.push(latLng);
-    this.setStateAndURLContext({ latLngList });
+    const currentLatLng = new LatLng(center);
+    if (isPlaying) {
+    latLngList.push(currentLatLng);
+    }
+    this.setStateAndURLContext({ latLngList, currentLatLng });
   }
 
   onClickRewind() {
@@ -52,7 +52,11 @@ export default class HomePage extends Component {
   }
 
   onClickPlay() {
-    this.setState({ isPlaying: true });
+    const {currentLatLng} = this.state;
+    let { latLngList } = this.state;
+    latLngList.push(currentLatLng);
+
+    this.setState({ isPlaying: true, latLngList });
   }
 
   onClickStop() {
