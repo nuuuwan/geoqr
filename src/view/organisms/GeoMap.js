@@ -24,7 +24,7 @@ function EventComponent({ onChangeCenter }) {
       const centerRaw = e.latlng;
       const center = [centerRaw.lat, centerRaw.lng];
       onChangeCenter(center);
-    }
+    },
   });
   return null;
 }
