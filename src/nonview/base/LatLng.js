@@ -1,7 +1,7 @@
 import URLContext from "./URLContext";
 
 export default class LatLng {
-  static PRECISION = 5;
+  static PRECISION = 6;
   static QUANTUM = 10 ** LatLng.PRECISION;
   static DEFAULT_ZOOM = 18;
   static DELIM_LIST_STR = ";";

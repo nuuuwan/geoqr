@@ -2,7 +2,7 @@
   position: fixed;
   z-index: 10000;
   margin: auto;
-  top: calc(45% + 100px - 32px);
+  top: calc(45% + 120px);
   left: 45%;
   height: 10%;
   width: 10%;

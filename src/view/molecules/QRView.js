@@ -2,13 +2,15 @@ import { Box, Typography } from "@mui/material";
 import React from "react";
 import QRCode from "react-qr-code";
 
-export default function QRView({ latLngList }) {
-  const url = latLngList.geoQRURL;
+const HEIGHT = 180;
+
+export default function QRView({ latLng }) {
+  const url = latLng.geoQRURL;
 
   return (
     <Box sx={{ p: 2, textAlign: "center" }}>
-      <QRCode title={latLngList.stats} value={url} style={{ height: 120 }} />
-      <Typography variant="h6">{latLngList.stats}</Typography>
+      <QRCode value={url} style={{ height: HEIGHT }} />
+      <Typography variant="h6">{latLng.toString()}</Typography>
     </Box>
   );
 }
