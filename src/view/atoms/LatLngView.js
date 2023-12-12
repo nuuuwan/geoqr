@@ -7,10 +7,10 @@ export function FloatView({ f }) {
   const n = s.length;
   return (
     <span>
-      <span style={{ fontSize: "200%", color: COLOR.GREEN }}>
+      <span style={{ fontSize: "150%", color: COLOR.GREEN }}>
         {s.substring(0, n - 6)}
       </span>
-      <span style={{ fontSize: "150%", color: COLOR.ORANGE }}>
+      <span style={{ fontSize: "125%", color: COLOR.ORANGE }}>
         {s.substring(n - 6, n - 3)}
       </span>
       <span style={{ fontSize: "100%", color: COLOR.RED }}>
