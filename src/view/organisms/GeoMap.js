@@ -35,7 +35,6 @@ export default class GeoMap extends Component {
       >
         <EventComponent onChangeCenter={onChangeCenter} />
         <TileLayer url={URL_FORMAT} />
-       
       </MapContainer>
     );
   }

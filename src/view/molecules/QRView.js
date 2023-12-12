@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
+import { Box } from "@mui/material";
 import React from "react";
 import QRCode from "react-qr-code";
+import { LatLngView } from "../atoms";
 
 const HEIGHT = 180;
 
@@ -10,7 +11,7 @@ export default function QRView({ latLng }) {
   return (
     <Box sx={{ p: 2, textAlign: "center" }}>
       <QRCode value={url} style={{ height: HEIGHT }} />
-      <Typography variant="h6">{latLng.toString()}</Typography>
+      <LatLngView latLng={latLng} />
     </Box>
   );
 }
