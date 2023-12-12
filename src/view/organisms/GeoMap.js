@@ -1,5 +1,5 @@
 import { Component } from "react";
-import { MapContainer, TileLayer, useMapEvents, Marker } from "react-leaflet";
+import { MapContainer, TileLayer, useMapEvents } from "react-leaflet";
 import { LatLng } from "../../nonview/base";
 
 import "./GeoMap.css";
@@ -35,7 +35,7 @@ export default class GeoMap extends Component {
       >
         <EventComponent onChangeCenter={onChangeCenter} />
         <TileLayer url={URL_FORMAT} />
-        <Marker position={latLng.latLng} />
+       
       </MapContainer>
     );
   }
